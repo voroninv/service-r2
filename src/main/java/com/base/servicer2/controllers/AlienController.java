@@ -27,7 +27,7 @@ public class AlienController {
     IAlienService alienService;
 
     @GetMapping("/alien")
-    public ResponseEntity<Alien> findAlienByName(@RequestParam String search) {
+    public ResponseEntity<List<Alien>> findAlienByName(@RequestParam String search) {
         logger.info("r2: looking for alien.");
 
         if (StringUtils.isBlank(search)) {
@@ -41,7 +41,7 @@ public class AlienController {
         }
         logger.info("r2: alien found.");
 
-        return ResponseEntity.ok(aliens.get(0));
+        return ResponseEntity.ok(aliens);
     }
 
     @PostMapping
