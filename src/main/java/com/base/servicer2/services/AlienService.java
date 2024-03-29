@@ -16,6 +16,11 @@ public class AlienService implements IAlienService {
     AlienRepo alienRepo;
 
     @Override
+    public List<Alien> listAliens() {
+        return alienRepo.findAll();
+    }
+
+    @Override
     public List<Alien> findAlienByName(String name) {
         return alienRepo.findByName(name);
     }

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AlienRepo extends JpaRepository<Alien, Long> {
 
+    List<Alien> findAll();
+
     List<Alien> findByName(@Param("name") String name);
 
     Alien save(Alien alien);

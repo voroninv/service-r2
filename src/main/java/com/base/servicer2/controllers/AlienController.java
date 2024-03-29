@@ -18,7 +18,7 @@ import static com.base.servicer2.constants.Constants.INCORRECT_REQUEST_PARAMETER
 import static com.base.servicer2.constants.Constants.NO_ALIENS_FOUND;
 
 @RestController
-@RequestMapping("/r2/api")
+@RequestMapping("/r2/api/alien")
 public class AlienController {
 
     private static final Logger logger = LogManager.getLogger(AlienController.class);
@@ -26,9 +26,23 @@ public class AlienController {
     @Autowired
     IAlienService alienService;
 
-    @GetMapping("/alien")
+    @GetMapping("/list")
+    public ResponseEntity<List<Alien>> listAliens() {
+        logger.info("r2: list aliens request received.");
+
+        List<Alien> aliens = alienService.listAliens();
+
+        if (aliens.isEmpty()) {
+            throw new ResourceNotFoundException(NO_ALIENS_FOUND);
+        }
+        logger.info("r2: list aliens request processed.");
+
+        return ResponseEntity.ok(aliens);
+    }
+
+    @GetMapping
     public ResponseEntity<List<Alien>> findAlienByName(@RequestParam String search) {
-        logger.info("r2: looking for alien.");
+        logger.info("r2: find alien request received.");
 
         if (StringUtils.isBlank(search)) {
             throw new BadRequestException(INCORRECT_REQUEST_PARAMETERS);
@@ -39,22 +53,26 @@ public class AlienController {
         if (aliens.isEmpty()) {
             throw new ResourceNotFoundException(NO_ALIENS_FOUND);
         }
-        logger.info("r2: alien found.");
+        logger.info("r2: find alien request processed.");
 
         return ResponseEntity.ok(aliens);
     }
 
     @PostMapping
     public ResponseEntity<Alien> saveAlien(@RequestBody Alien alien) {
+        logger.info("r2: save alien request received.");
         Alien alienResponse = alienService.saveAlien(alien);
+        logger.info("r2: save alien request processed.");
 
         return ResponseEntity.ok(alienResponse);
     }
 
     @DeleteMapping
     public ResponseEntity<Integer> deleteAlienById(@RequestParam Integer id) {
+        logger.info("r2: delete alien request received.");
         try {
             alienService.deleteAlienById(id);
+            logger.info("r2: delete alien request processed.");
 
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
         } catch (Exception e) {

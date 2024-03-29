@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IAlienService {
 
+    List<Alien> listAliens();
+
     List<Alien> findAlienByName(String name);
 
     Alien saveAlien(Alien alien);
