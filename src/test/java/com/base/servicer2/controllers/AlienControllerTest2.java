@@ -2,12 +2,16 @@ package com.base.servicer2.controllers;
 
 import com.base.servicer2.entities.Alien;
 import com.base.servicer2.services.AlienService;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -32,6 +36,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 public class AlienControllerTest2 {
 
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
@@ -39,12 +46,18 @@ public class AlienControllerTest2 {
     @MockBean
     private AlienService alienService;
 
+    @BeforeEach
+    void setUp() {
+        Assertions.assertThat(contextPath).isNotBlank();
+        ((MockServletContext) mockMvc.getDispatcherServlet().getServletContext()).setContextPath(contextPath);
+    }
+
     @Test
     public void listAliensTest() throws Exception {
         when(alienService.listAliens())
                 .thenReturn(Collections.singletonList(getAlien()));
 
-        this.mockMvc.perform(get("/r2/api/alien/list")
+        this.mockMvc.perform(get("/api/alien/list")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -62,7 +75,7 @@ public class AlienControllerTest2 {
         when(alienService.findAlienByName(eq("Mike")))
                 .thenReturn(Collections.singletonList(getAlien()));
 
-        this.mockMvc.perform(get("/r2/api/alien")
+        this.mockMvc.perform(get("/api/alien")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("search", "Mike")
@@ -82,7 +95,7 @@ public class AlienControllerTest2 {
         when(alienService.saveAlien(any(Alien.class)))
                 .thenReturn(getAlien());
 
-        this.mockMvc.perform(post("/r2/api/alien")
+        this.mockMvc.perform(post("/api/alien")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
