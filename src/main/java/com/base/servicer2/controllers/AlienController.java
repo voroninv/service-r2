@@ -18,7 +18,7 @@ import static com.base.servicer2.constants.Constants.INCORRECT_REQUEST_PARAMETER
 import static com.base.servicer2.constants.Constants.NO_ALIENS_FOUND;
 
 @RestController
-@RequestMapping("/r2/api/alien")
+@RequestMapping("/api/alien")
 public class AlienController {
 
     private static final Logger logger = LogManager.getLogger(AlienController.class);
