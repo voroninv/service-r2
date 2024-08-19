@@ -49,10 +49,10 @@ public class AlienControllerTest3 {
         when(alienService.findAlienByName("Mike"))
                 .thenReturn(Collections.singletonList(getAlien()));
 
-        this.mockMvc.perform(get("/api/alien/")
+        this.mockMvc.perform(get("/api/aliens/")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("search", "Mike")
+                        .param("name", "Mike")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())

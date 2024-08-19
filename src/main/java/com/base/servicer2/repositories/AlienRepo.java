@@ -6,13 +6,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AlienRepo extends JpaRepository<Alien, Long> {
+public interface AlienRepo extends JpaRepository<Alien, Integer> {
 
-    List<Alien> findAll();
+//    List<Alien> findAll();
 
     List<Alien> findByName(@Param("name") String name);
 
-    Alien save(Alien alien);
+//    Optional<Alien> findById(Integer integer);
 
-    void deleteById(Integer id);
+//    <S extends Alien> S save(S entity);
+
+//    void deleteById(Integer id);
 }

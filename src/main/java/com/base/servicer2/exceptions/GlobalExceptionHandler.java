@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return new ResponseEntity<>(body(ex), HttpStatus.NOT_FOUND);

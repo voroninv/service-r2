@@ -54,10 +54,10 @@ public class AlienControllerTest2 {
 
     @Test
     public void listAliensTest() throws Exception {
-        when(alienService.listAliens())
+        when(alienService.findAllAliens())
                 .thenReturn(Collections.singletonList(getAlien()));
 
-        this.mockMvc.perform(get("/api/alien/list")
+        this.mockMvc.perform(get("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -75,10 +75,10 @@ public class AlienControllerTest2 {
         when(alienService.findAlienByName(eq("Mike")))
                 .thenReturn(Collections.singletonList(getAlien()));
 
-        this.mockMvc.perform(get("/api/alien")
+        this.mockMvc.perform(get("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("search", "Mike")
+                        .param("name", "Mike")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -95,14 +95,14 @@ public class AlienControllerTest2 {
         when(alienService.saveAlien(any(Alien.class)))
                 .thenReturn(getAlien());
 
-        this.mockMvc.perform(post("/api/alien")
+        this.mockMvc.perform(post("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "    \"name\": \"TestName\",\n" +
                                 "    \"tech\": \"TestTech\"\n" +
                                 "}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").isNotEmpty())
                 .andExpect(jsonPath("$.tech").isNotEmpty())
