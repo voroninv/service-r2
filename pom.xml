@@ -12,7 +12,7 @@
 	<artifactId>service-r2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service-r2</name>
-	<description>Demo project for Spring Boot and Docker</description>
+	<description>Alien Management Web Service</description>
 
 	<properties>
 		<java.version>17</java.version>

@@ -49,7 +49,7 @@ public class AlienControllerTest {
 
     @Test
     public void listAliensTest() throws Exception {
-        this.mockMvc.perform(get("/api/alien/list")
+        this.mockMvc.perform(get("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-KEY", token)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,11 +66,11 @@ public class AlienControllerTest {
 
     @Test
     public void findAlienByNameTest() throws Exception {
-        this.mockMvc.perform(get("/api/alien")
+        this.mockMvc.perform(get("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("X-API-KEY", token)
-                        .param("search", "Mike")
+                        .param("name", "Mike")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -80,7 +80,7 @@ public class AlienControllerTest {
 
     @Test
     public void saveAndDeleteAlienTest() throws Exception {
-        String result = this.mockMvc.perform(post("/api/alien")
+        String result = this.mockMvc.perform(post("/api/aliens")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("X-API-KEY", token)
@@ -88,12 +88,12 @@ public class AlienControllerTest {
                                 "    \"name\": \"TestName\",\n" +
                                 "    \"tech\": \"TestTech\"\n" +
                                 "}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         String id = getId(result);
-        this.mockMvc.perform(delete("/api/alien")
+        this.mockMvc.perform(delete("/api/aliens/" + id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("X-API-KEY", token)
