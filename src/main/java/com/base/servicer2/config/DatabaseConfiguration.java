@@ -22,13 +22,22 @@ public class DatabaseConfiguration {
     @Value("${database.url}")
     private String databaseUrl;
 
+    @Value("${database.username}")
+    private String databaseUsername;
+
+    @Value("${database.password}")
+    private String databasePassword;
+
+    @Value("${database.driver}")
+    private String databaseDriver;
+
     @Bean
     DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setUrl("jdbc:mysql://" + databaseUrl + ":3306/dbone");
-        driverManagerDataSource.setUsername("root");
-        driverManagerDataSource.setPassword("1234");
-        driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        driverManagerDataSource.setUrl(databaseUrl);
+        driverManagerDataSource.setUsername(databaseUsername);
+        driverManagerDataSource.setPassword(databasePassword);
+        driverManagerDataSource.setDriverClassName(databaseDriver);
         return driverManagerDataSource;
     }
 

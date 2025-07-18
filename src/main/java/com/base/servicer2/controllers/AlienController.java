@@ -29,6 +29,7 @@ public class AlienController {
         logger.info("r2: get aliens request received.");
 
         List<Alien> aliens;
+
         if (StringUtils.isBlank(name)) {
             aliens = alienService.findAllAliens();
         } else {
@@ -38,6 +39,7 @@ public class AlienController {
         if (aliens.isEmpty()) {
             throw new ResourceNotFoundException(NO_ALIENS_FOUND);
         }
+
         logger.info("r2: get aliens request processed.");
 
         return ResponseEntity.ok(aliens);

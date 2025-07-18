@@ -34,7 +34,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    AuthenticationFilter authenticationFilter() {
+    public AuthenticationFilter authenticationFilter() {
         return new AuthenticationFilter();
     }
 }
